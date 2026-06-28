@@ -321,6 +321,7 @@ const services = [
                   >
                     {p.images ? (
                       <div>
+                        <div class="deck-clip">
                         <div class="phone-deck" data-deck>
                           {p.images.map((img, n) => (
                             <figure class="deck-card" data-i={n}>
@@ -334,6 +335,7 @@ const services = [
                               />
                             </figure>
                           ))}
+                        </div>
                         </div>
                         <div class="deck-dots" data-dots>
                           {p.images.map((_img, n) => (
@@ -600,11 +602,19 @@ const services = [
         { rootMargin: '0px 0px 600px 0px', threshold: 0 },
       );
       els.forEach((el) => io.observe(el));
-      // Safety: anything still hidden after 2.5s gets shown unconditionally.
-      window.setTimeout(showAll, 2500);
+      // Safety: anything still hidden after 1.2s gets shown unconditionally.
+      window.setTimeout(showAll, 1200);
     } else {
       showAll();
     }
+    // Direct navigation must never land on hidden content: reveal everything
+    // when the page opens at a hash, on any hash change, or when an in-page
+    // anchor is clicked (nav links, mobile menu, hero CTAs, back-to-top).
+    if (location.hash) showAll();
+    window.addEventListener('hashchange', showAll);
+    document.querySelectorAll('a[href^="#"]').forEach((a) =>
+      a.addEventListener('click', showAll),
+    );
 
     // Header hairline appears once you scroll past the hero top
     const header = document.getElementById('site-header');

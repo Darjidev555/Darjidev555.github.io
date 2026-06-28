@@ -26,9 +26,6 @@ html {
 body {
   background: transparent;
   color: var(--ink);
-  /* Coverflow side-phones spill past the column on small screens — clip the
-     horizontal axis so they never create a page-wide horizontal scroll. */
-  overflow-x: clip;
 }
 
 ::selection {
@@ -235,6 +232,13 @@ html.js .reveal.is-in {
   background: var(--ink);
   box-shadow: 0 28px 64px rgba(21, 23, 28, 0.32);
 }
+/* Keep the coverflow inside the project card: clip the neighbouring phones at
+   the card's inner edge so they peek but never spill out (and never widen the
+   page). Vertical padding leaves room for the active phone's drop-shadow. */
+.deck-clip {
+  overflow: hidden;
+  padding: 1.75rem 0;
+}
 .deck-dots {
   display: flex;
   gap: 2px;
@@ -295,3 +299,7 @@ html.js .reveal.is-in {
 :where(section, main)[id] {
   scroll-margin-top: 76px;
 }
+
+/* TEMP-AUDIT */
+.max-h-\[40vh\]{max-height:300px!important}
+.sm\:max-h-\[56vh\]{max-height:300px!important}
