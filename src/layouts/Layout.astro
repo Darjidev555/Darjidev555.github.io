@@ -1,0 +1,86 @@
+---
+import '../styles/global.css';
+
+export interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+}
+
+const {
+  title = 'Dev Darji — Full Stack Mobile Developer',
+  description = 'Dev Darji — full stack mobile developer. 4+ apps live on the App Store and Play Store, built to scale past 100K users. Product-minded, ship-focused, available for contract work.',
+  image = '/og.png',
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://devdarji.com').href;
+
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Dev Darji',
+  jobTitle: 'Full Stack Mobile Developer',
+  url: canonical,
+  email: 'mailto:darjidev9313@gmail.com',
+  sameAs: ['https://www.linkedin.com/in/devdarji05/', 'https://github.com/Darjidev555/'],
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <!-- Opt into JS reveal animation before first paint (no flash); without
+         JS the .reveal content stays visible by default. -->
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
+
+    <!-- Primary -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#eaebe6" />
+    <meta name="author" content="Dev Darji" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL(image, canonical).href} />
+    <meta property="og:site_name" content="Dev Darji" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(image, canonical).href} />
+
+    <!-- Icons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Fonts: Space Grotesk (display) · IBM Plex Sans (body) · IBM Plex Mono (data) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap"
+    />
+
+    <script type="application/ld+json" set:html={JSON.stringify(person)} />
+  </head>
+  <body class="font-sans antialiased">
+    <div class="aurora" aria-hidden="true">
+      <span class="blob blob-1"></span>
+      <span class="blob blob-2"></span>
+      <span class="blob blob-3"></span>
+      <span class="grid-veil"></span>
+    </div>
+    <div class="edge-ruler left" aria-hidden="true"></div>
+    <div class="edge-ruler right" aria-hidden="true"></div>
+    <slot />
+  </body>
+</html>

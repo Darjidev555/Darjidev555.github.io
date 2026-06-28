@@ -1,0 +1,813 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+import cutout from '../assets/dev-darji-cutout.png';
+import dwSplash from '../assets/projects/drink-water/01-splash.png';
+import dwHome from '../assets/projects/drink-water/02-home-empty.png';
+import dwProgress from '../assets/projects/drink-water/03-progress.png';
+import dwSettings from '../assets/projects/drink-water/04-settings.png';
+import dwCelebration from '../assets/projects/drink-water/05-celebration.png';
+import pxHome from '../assets/projects/pixora/01-home.png';
+import pxDesigns from '../assets/projects/pixora/02-mydesigns.png';
+import pxCustomize from '../assets/projects/pixora/03-customize.png';
+import pxSettings from '../assets/projects/pixora/04-settings.png';
+import hlHome from '../assets/projects/headline/01-home.png';
+import hlList from '../assets/projects/headline/02-news-list.png';
+import hlDetail from '../assets/projects/headline/03-detail.png';
+
+const nav = [
+  { label: 'Home', href: '#top' },
+  { label: 'Projects', href: '#work' },
+  { label: 'Services', href: '#services' },
+  { label: 'Contact', href: '#contact' },
+];
+
+// NOTE: placeholder spec data — replace with real numbers as we go.
+const specs = [
+  { k: 'Apps shipped', v: '4+' },
+  { k: 'Users handled', v: '100K+' },
+  { k: 'Platforms', v: 'iOS · Android' },
+  { k: 'Status', v: 'Available' },
+];
+
+// NOTE: placeholder projects — Vidplay is real (from current site); two are stubs.
+const projects = [
+  {
+    idx: '01',
+    name: 'Drink Water Reminder',
+    blurb:
+      'A hydration app for busy people who forget to drink water. It sends timely reminders through the day, tracks intake against a daily goal, and rewards consistency with streaks — while a playful character gradually fills with water as you log each glass. Progress is visualised across day, month, and year, with full light and dark themes.',
+    year: '2026',
+    platform: 'iOS · Android',
+    stack: 'Flutter · GetX · Hive',
+    href: '#',
+    images: [dwSplash, dwHome, dwCelebration, dwProgress, dwSettings],
+  },
+  {
+    idx: '02',
+    name: 'Pixora',
+    blurb:
+      'Pixora is a Canva-style design studio in your pocket. Browse 5,000+ ready-made templates across weddings, birthdays, events, flyers, resumes and menus, then make any of them your own — swap photos, edit text, zoom and reframe on a live canvas. Every design saves to a personal library, and finished work can be downloaded or shared in a tap, with premium export for higher-resolution output. Built to make polished, professional graphics effortless for people who were never trained as designers.',
+    year: '2026',
+    platform: 'iOS · Android',
+    stack: 'Flutter',
+    href: '#',
+    images: [pxHome, pxDesigns, pxCustomize, pxSettings],
+  },
+  {
+    idx: '03',
+    name: 'Headline',
+    blurb:
+      'Headline is a news app that surfaces what is trending right now. It pulls live articles from a REST news API, organises them into hottest stories and a personalised "News For You" feed, and opens any story into a clean, full-screen reading view. Built with Riverpod for predictable state management and Firebase for authentication.',
+    year: '2026',
+    platform: 'iOS · Android',
+    stack: 'Flutter · Riverpod · Firebase · REST API',
+    href: '#',
+    images: [hlHome, hlList, hlDetail],
+  },
+];
+
+const services = [
+  {
+    title: 'Cross-Platform App Development',
+    desc: 'One Flutter codebase for iOS, Android, and web. Native performance with faster delivery.',
+    icon: '<path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/>',
+  },
+  {
+    title: 'UI / UX Implementation',
+    desc: 'Pixel-perfect screens built straight from Figma. Clean, intuitive, user-first interfaces.',
+    icon: '<rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/>',
+  },
+  {
+    title: 'Backend & API Integration',
+    desc: 'REST APIs, Firebase, Supabase, and Laravel. Secure, scalable, and real-time ready.',
+    icon: '<rect width="20" height="8" x="2" y="2" rx="2"/><rect width="20" height="8" x="2" y="14" rx="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/>',
+  },
+  {
+    title: 'App Store & Play Store Deployment',
+    desc: 'Full publishing handled — code signing, store submission, and release management.',
+    icon: '<path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>',
+  },
+  {
+    title: 'Performance Optimization',
+    desc: 'Smooth 60fps experiences, fast load times, and clean, maintainable architecture.',
+    icon: '<path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/>',
+  },
+  {
+    title: 'Maintenance & Support',
+    desc: 'Ongoing updates, bug fixes, and security patches to keep apps running long-term.',
+    icon: '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/>',
+  },
+];
+
+---
+
+<Layout>
+  <!-- ─── Header ─────────────────────────────────────────── -->
+  <header
+    id="site-header"
+    class="fixed inset-x-0 top-0 z-40 border-b border-line/0 bg-paper/80 backdrop-blur transition-all duration-300"
+  >
+    <div class="mx-auto flex max-w-shell items-center justify-between px-5 py-4 md:px-10">
+      <div class="flex items-center gap-6 md:gap-12">
+        <a href="#top" class="font-display text-xl font-bold tracking-tight">
+          Dev<span class="text-signal">.</span>
+        </a>
+        <nav aria-label="Primary" class="hidden items-center gap-8 md:flex">
+          {
+            nav.map((n) => (
+              <a
+                href={n.href}
+                class="link-underline font-mono text-[12px] uppercase tracking-wide text-mute hover:text-ink"
+              >
+                {n.label}
+              </a>
+            ))
+          }
+        </nav>
+      </div>
+
+      <!-- desktop CTA -->
+      <a
+        href="#contact"
+        class="hidden items-center gap-2 rounded-full bg-signal px-5 py-2.5 font-mono text-[12px] uppercase tracking-wide text-paper transition-transform hover:-translate-y-0.5 md:inline-flex"
+      >
+        Let's talk
+      </a>
+
+      <!-- mobile hamburger -->
+      <button
+        id="nav-toggle"
+        type="button"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        class="-mr-2 flex h-11 w-11 items-center justify-center rounded-md text-ink transition-colors hover:bg-line/40 md:hidden"
+      >
+        <svg id="nav-icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" class="h-6 w-6" aria-hidden="true">
+          <line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+        <svg id="nav-icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" class="hidden h-6 w-6" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- mobile menu panel -->
+    <div id="mobile-menu" class="mobile-menu border-t border-line bg-paper/95 backdrop-blur md:hidden">
+      <nav aria-label="Mobile" class="mx-auto flex max-w-shell flex-col px-5 py-2">
+        {
+          nav.map((n) => (
+            <a
+              href={n.href}
+              class="border-b border-line/60 py-4 font-mono text-[13px] uppercase tracking-wide text-ink/80 transition-colors hover:text-signal"
+            >
+              {n.label}
+            </a>
+          ))
+        }
+        <a
+          href="#contact"
+          class="mt-4 inline-flex items-center justify-center gap-2 rounded-full bg-signal px-5 py-3.5 font-mono text-[13px] uppercase tracking-wide text-paper"
+        >
+          Let's talk
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- ─── Hero (text left · photo right) ─────────────────── -->
+    <section class="relative border-b border-line pt-20 md:pt-0">
+      <div class="grid md:min-h-[90vh] md:grid-cols-[1.12fr_0.88fr]">
+        <!-- LEFT: intro -->
+        <div
+          class="order-2 flex flex-col justify-center px-6 py-14 md:order-1 md:py-20 md:pl-10 md:pr-12 lg:pl-16 xl:pl-24"
+        >
+          <p class="reveal mb-6 inline-flex items-center gap-2 font-mono text-[12px] uppercase tracking-[0.2em] text-mute">
+            <span class="status-dot inline-block h-1.5 w-1.5 rounded-full bg-signal" aria-hidden="true"></span>
+            Available for work
+          </p>
+
+          <h1 class="reveal reveal-delay-1 font-display text-5xl font-bold leading-[1.0] tracking-tightest sm:text-7xl lg:text-8xl">
+            Hi, I'm <span class="text-signal">Dev Darji</span>
+          </h1>
+          <p class="reveal reveal-delay-1 mt-4 font-display text-3xl font-semibold text-ink/65 sm:text-4xl">
+            Full Stack Mobile Developer
+          </p>
+
+          <p class="reveal reveal-delay-2 mt-7 max-w-[34rem] font-display text-2xl font-semibold leading-snug tracking-tight sm:text-[1.7rem]">
+            I don't just build apps — <span class="text-signal">I build products that scale.</span>
+          </p>
+          <p class="reveal reveal-delay-2 mt-4 max-w-[36rem] text-lg leading-relaxed text-ink/65">
+            Helping startups and businesses build scalable, high-performance mobile products.
+            4+ apps shipped to the App Store &amp; Play Store with clean architecture,
+            performance, and user-first execution.
+          </p>
+
+          <div class="reveal reveal-delay-3 mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+            <a
+              href="#contact"
+              class="inline-flex w-full items-center justify-center gap-2 rounded-md bg-signal px-7 py-4 font-mono text-[13px] uppercase tracking-wide text-paper transition-transform hover:-translate-y-0.5 sm:w-auto sm:py-3.5"
+            >
+              Hire me
+            </a>
+            <a
+              href="#work"
+              class="inline-flex w-full items-center justify-center gap-2 rounded-md border-2 border-signal px-7 py-[15px] font-mono text-[13px] uppercase tracking-wide text-signal transition-colors hover:bg-signal hover:text-paper sm:w-auto sm:py-3"
+            >
+              See projects
+            </a>
+          </div>
+
+          <div class="reveal reveal-delay-3 mt-10 flex items-center gap-3">
+            <a
+              href="https://www.linkedin.com/in/devdarji05/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Dev Darji on LinkedIn"
+              class="flex h-11 w-11 items-center justify-center rounded-full bg-signal text-paper transition-transform hover:-translate-y-0.5"
+            >
+              <svg viewBox="0 0 24 24" fill="currentColor" class="h-[18px] w-[18px]" aria-hidden="true">
+                <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/>
+              </svg>
+            </a>
+            <a
+              href="https://github.com/Darjidev555/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Dev Darji on GitHub"
+              class="flex h-11 w-11 items-center justify-center rounded-full bg-signal text-paper transition-transform hover:-translate-y-0.5"
+            >
+              <svg viewBox="0 0 24 24" fill="currentColor" class="h-[18px] w-[18px]" aria-hidden="true">
+                <path d="M12 .5C5.37.5 0 5.87 0 12.5c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58 0-.29-.01-1.05-.02-2.06-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.2.09 1.84 1.24 1.84 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.34-5.47-5.95 0-1.31.47-2.39 1.24-3.23-.13-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6.01 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.65.25 2.87.12 3.17.77.84 1.23 1.92 1.23 3.23 0 4.62-2.81 5.64-5.49 5.94.43.37.81 1.1.81 2.22 0 1.61-.01 2.9-.01 3.29 0 .32.21.7.82.58A12.01 12.01 0 0 0 24 12.5C24 5.87 18.63.5 12 .5z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- RIGHT: cutout, bottom-anchored, head fully visible -->
+        <div
+          class="relative order-1 flex h-[46vh] min-h-[340px] items-end justify-center overflow-hidden md:order-2 md:h-auto md:min-h-0 md:justify-end md:pr-10 lg:pr-16"
+        >
+          <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+            <div
+              class="absolute right-[6%] top-1/2 h-[64vh] w-[64vh] -translate-y-1/2 rounded-full blur-2xl"
+              style="background:radial-gradient(circle, rgba(27,51,255,0.24) 0%, rgba(27,51,255,0.08) 40%, transparent 64%)"
+            >
+            </div>
+          </div>
+          <Image
+            src={cutout}
+            alt="Dev Darji, full stack mobile developer"
+            widths={[400, 600, 785]}
+            sizes="(max-width: 768px) 80vw, 46vw"
+            loading="eager"
+            class="hero-float relative z-10 h-auto w-auto max-w-full max-h-[40vh] object-contain object-bottom drop-shadow-[0_30px_55px_rgba(21,23,28,0.18)] sm:max-h-[56vh] md:max-h-[72vh]"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Stats band ───────────────────────────────────── -->
+    <section class="border-b border-line">
+      <div class="mx-auto max-w-shell px-5 md:px-10">
+        <dl class="grid grid-cols-2 gap-px overflow-hidden bg-line text-sm sm:grid-cols-4">
+          {
+            specs.map((s) => (
+              <div class="bg-paper px-5 py-6">
+                <dt class="font-mono text-[11px] uppercase tracking-wide text-mute">{s.k}</dt>
+                <dd class="mt-2 font-display text-2xl font-semibold tracking-tight">{s.v}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+    </section>
+
+    <!-- ─── Selected Work ────────────────────────────────── -->
+    <section id="work" class="border-t border-line">
+      <div class="mx-auto max-w-shell px-5 py-20 md:px-10 md:py-28">
+        <div class="reveal flex items-baseline justify-between border-b border-line pb-5">
+          <h2 class="font-display text-3xl font-semibold tracking-tight md:text-4xl">Projects</h2>
+        </div>
+
+        <div class="mt-16 grid gap-20 md:gap-28">
+          {
+            projects.map((p, i) => (
+              <article
+                class={`reveal group grid items-center gap-10 md:gap-16 ${
+                  i % 2 === 1 ? 'md:grid-cols-[1fr_1.05fr]' : 'md:grid-cols-[1.05fr_1fr]'
+                }`}
+              >
+                <div class={`tilt-stage relative ${i % 2 === 1 ? 'md:order-2' : ''}`}>
+                  <span class="pointer-events-none absolute -top-9 left-0 z-0 select-none font-display text-[6.5rem] font-bold leading-none text-ink/[0.06] md:text-[9rem]">
+                    {p.idx}
+                  </span>
+                  <div
+                    class="pointer-events-none absolute inset-x-8 bottom-6 top-14 z-0 rounded-[2.5rem] bg-gradient-to-br from-signal/30 via-signal/10 to-transparent opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100"
+                    aria-hidden="true"
+                  />
+                  <div
+                    class="tilt relative z-10 overflow-visible rounded-[1.3rem] border border-line bg-panel px-5 py-6 shadow-[0_14px_38px_rgba(21,23,28,0.08)] transition-shadow duration-300 group-hover:shadow-[0_48px_90px_rgba(21,23,28,0.22)] md:px-6 md:py-7"
+                    data-tilt="5"
+                  >
+                    {p.images ? (
+                      <div>
+                        <div class="phone-deck" data-deck>
+                          {p.images.map((img, n) => (
+                            <figure class="deck-card" data-i={n}>
+                              <Image
+                                src={img}
+                                alt={`${p.name} — screen ${n + 1}`}
+                                widths={[260, 520]}
+                                sizes="260px"
+                                loading="lazy"
+                                decoding="async"
+                              />
+                            </figure>
+                          ))}
+                        </div>
+                        <div class="deck-dots" data-dots>
+                          {p.images.map((_img, n) => (
+                            <button
+                              type="button"
+                              class="deck-dot"
+                              data-on={n === 0 ? 'true' : 'false'}
+                              aria-label={`Show ${p.name} screen ${n + 1}`}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    ) : (
+                      <div
+                        class="grid-fill flex aspect-[4/3] w-full items-end justify-between p-4"
+                        role="img"
+                        aria-label={`Preview of ${p.name}`}
+                      >
+                        <span class="font-mono text-[11px] uppercase tracking-wide text-mute">
+                          Screen / Preview
+                        </span>
+                        <span class="font-display text-5xl font-bold text-line">{p.idx}</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <div class={i % 2 === 1 ? 'md:order-1' : ''}>
+                  <span class="font-mono text-[12px] uppercase tracking-[0.2em] text-signal">
+                    Project {p.idx}
+                  </span>
+                  <h3 class="mt-3 font-display text-3xl font-semibold tracking-tight md:text-4xl">
+                    {p.name}
+                  </h3>
+                  <p class="mt-4 max-w-[46ch] leading-relaxed text-ink/75">{p.blurb}</p>
+
+                  <dl class="mt-7 grid max-w-md grid-cols-2 gap-x-8 gap-y-5 border-t border-line pt-6 font-mono text-[12px]">
+                    <div>
+                      <dt class="text-mute">YEAR</dt>
+                      <dd class="mt-1.5">{p.year}</dd>
+                    </div>
+                    <div>
+                      <dt class="text-mute">PLATFORM</dt>
+                      <dd class="mt-1.5">{p.platform}</dd>
+                    </div>
+                    <div class="col-span-2">
+                      <dt class="text-mute">STACK</dt>
+                      <dd class="mt-1.5">{p.stack}</dd>
+                    </div>
+                  </dl>
+
+                  {p.href !== '#' && (
+                    <a
+                      href={p.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="link-underline mt-7 inline-block font-mono text-[12px] uppercase tracking-wide"
+                    >
+                      View on GitHub →
+                    </a>
+                  )}
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Services ─────────────────────────────────────── -->
+    <section id="services" class="border-t border-line bg-panel">
+      <div class="mx-auto max-w-shell px-5 py-20 md:px-10 md:py-28">
+        <div class="reveal max-w-2xl">
+          <p class="font-mono text-[12px] uppercase tracking-[0.2em] text-signal">What I do</p>
+          <h2 class="mt-4 font-display text-3xl font-semibold tracking-tight md:text-4xl">Services</h2>
+          <p class="mt-4 text-lg leading-relaxed text-ink/65">
+            I take products from first screen to store release — one Flutter codebase, every platform.
+          </p>
+        </div>
+
+        <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {
+            services.map((s) => (
+              <div class="reveal group relative flex flex-col rounded-xl border border-line bg-paper/40 p-7 transition-all duration-300 hover:-translate-y-1.5 hover:border-signal/40 hover:bg-paper hover:shadow-[0_24px_50px_rgba(21,23,28,0.13)]">
+                <div class="flex h-12 w-12 items-center justify-center rounded-lg border border-line bg-panel text-signal transition-colors duration-300 group-hover:border-signal group-hover:bg-signal group-hover:text-paper">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="h-6 w-6"
+                    aria-hidden="true"
+                    set:html={s.icon}
+                  />
+                </div>
+                <h3 class="mt-6 font-display text-lg font-semibold tracking-tight">{s.title}</h3>
+                <p class="mt-2.5 text-sm leading-relaxed text-ink/70">{s.desc}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Contact / CTA ────────────────────────────────── -->
+    <section id="contact" class="border-t border-line bg-ink text-paper">
+      <div class="mx-auto max-w-shell px-5 py-24 md:px-10 md:py-32">
+       <div class="grid gap-14 md:grid-cols-2 md:items-center md:gap-20">
+        <div>
+        <p class="reveal font-mono text-[12px] uppercase tracking-[0.2em] text-paper/50">
+          Contact <span class="text-paper/30">//</span> Available for contract
+        </p>
+        <h2 class="reveal reveal-delay-1 mt-6 max-w-[14ch] font-display text-[11vw] font-bold leading-[0.95] tracking-tightest sm:text-5xl lg:text-6xl">
+          Let's build something precise.
+        </h2>
+
+        <div class="reveal reveal-delay-2 mt-10 flex flex-wrap items-center gap-4">
+          <a
+            href="mailto:darjidev9313@gmail.com"
+            class="group inline-flex items-center gap-2 border border-signal bg-transparent px-7 py-4 font-mono text-[13px] normal-case tracking-wide text-signal transition-colors hover:bg-signal hover:text-paper"
+          >
+            darjidev9313@gmail.com
+            <span class="transition-transform group-hover:translate-x-1">→</span>
+          </a>
+        </div>
+
+        <div class="reveal reveal-delay-3 mt-7 flex flex-wrap items-center gap-3">
+          <a
+            href="https://www.linkedin.com/in/devdarji05/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Dev Darji on LinkedIn"
+            class="group inline-flex items-center gap-2.5 border border-paper/20 px-5 py-3 font-mono text-[12px] uppercase tracking-wide text-paper/85 transition-colors hover:border-signal hover:text-paper"
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor" class="h-[18px] w-[18px]" aria-hidden="true">
+              <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/>
+            </svg>
+            LinkedIn
+          </a>
+          <a
+            href="https://github.com/Darjidev555/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Dev Darji on GitHub"
+            class="group inline-flex items-center gap-2.5 border border-paper/20 px-5 py-3 font-mono text-[12px] uppercase tracking-wide text-paper/85 transition-colors hover:border-signal hover:text-paper"
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor" class="h-[18px] w-[18px]" aria-hidden="true">
+              <path d="M12 .5C5.37.5 0 5.87 0 12.5c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58 0-.29-.01-1.05-.02-2.06-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.2.09 1.84 1.24 1.84 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.34-5.47-5.95 0-1.31.47-2.39 1.24-3.23-.13-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6.01 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.65.25 2.87.12 3.17.77.84 1.23 1.92 1.23 3.23 0 4.62-2.81 5.64-5.49 5.94.43.37.81 1.1.81 2.22 0 1.61-.01 2.9-.01 3.29 0 .32.21.7.82.58A12.01 12.01 0 0 0 24 12.5C24 5.87 18.63.5 12 .5z"/>
+            </svg>
+            GitHub
+          </a>
+        </div>
+        </div>
+
+        <!-- RIGHT: real-time contact form — delivers straight to email -->
+        <div class="reveal reveal-delay-2">
+          <form id="contact-form" class="space-y-5" novalidate>
+            <div>
+              <label for="cf-name" class="mb-2 block font-mono text-[11px] uppercase tracking-wide text-paper/50">Name</label>
+              <input
+                id="cf-name"
+                name="name"
+                type="text"
+                required
+                autocomplete="name"
+                placeholder="Your name"
+                aria-describedby="err-name"
+                class="w-full rounded-md border border-paper/15 bg-paper/[0.06] px-4 py-3.5 text-base text-paper outline-none transition placeholder:text-paper/35 focus:border-signal focus:bg-paper/[0.1] aria-[invalid=true]:border-red-400/70"
+              />
+              <p id="err-name" class="mt-1.5 hidden font-mono text-[11px] text-red-300"></p>
+            </div>
+            <div>
+              <label for="cf-email" class="mb-2 block font-mono text-[11px] uppercase tracking-wide text-paper/50">Email</label>
+              <input
+                id="cf-email"
+                name="email"
+                type="email"
+                required
+                autocomplete="email"
+                inputmode="email"
+                placeholder="you@company.com"
+                aria-describedby="err-email"
+                class="w-full rounded-md border border-paper/15 bg-paper/[0.06] px-4 py-3.5 text-base text-paper outline-none transition placeholder:text-paper/35 focus:border-signal focus:bg-paper/[0.1] aria-[invalid=true]:border-red-400/70"
+              />
+              <p id="err-email" class="mt-1.5 hidden font-mono text-[11px] text-red-300"></p>
+            </div>
+            <div>
+              <label for="cf-message" class="mb-2 block font-mono text-[11px] uppercase tracking-wide text-paper/50">Project / Message</label>
+              <textarea
+                id="cf-message"
+                name="message"
+                rows="5"
+                required
+                placeholder="Tell me about your project…"
+                aria-describedby="err-message"
+                class="w-full resize-y rounded-md border border-paper/15 bg-paper/[0.06] px-4 py-3.5 text-base text-paper outline-none transition placeholder:text-paper/35 focus:border-signal focus:bg-paper/[0.1] aria-[invalid=true]:border-red-400/70"
+              ></textarea>
+              <p id="err-message" class="mt-1.5 hidden font-mono text-[11px] text-red-300"></p>
+            </div>
+            <!-- honeypot: hidden field bots fill, humans don't -->
+            <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" class="hidden" />
+            <button
+              type="submit"
+              id="cf-submit"
+              class="group inline-flex w-full items-center justify-center gap-2 rounded-md bg-signal px-7 py-4 font-mono text-[13px] uppercase tracking-wide text-paper transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              <span data-label>Send message</span>
+              <span aria-hidden="true" class="transition-transform group-hover:translate-x-1">→</span>
+            </button>
+            <p id="cf-status" role="status" aria-live="polite" class="min-h-[1.2em] font-mono text-[12px] text-paper/65"></p>
+          </form>
+        </div>
+       </div>
+      </div>
+    </section>
+
+    <!-- ─── Footer ───────────────────────────────────────── -->
+    <footer class="border-t border-line">
+      <div
+        class="mx-auto flex max-w-shell flex-col gap-4 px-5 py-8 font-mono text-[11px] uppercase tracking-wide text-mute md:flex-row md:items-center md:justify-between md:px-10"
+      >
+        <span>© 2025 Dev Darji</span>
+        <span>Designed &amp; built by Dev Darji — Astro + Tailwind</span>
+        <a href="#top" class="link-underline text-ink">Back to top ↑</a>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    // Mobile hamburger menu — slide-down panel, thumb-friendly
+    const navToggle = document.getElementById('nav-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const iconOpen = document.getElementById('nav-icon-open');
+    const iconClose = document.getElementById('nav-icon-close');
+    if (navToggle && mobileMenu) {
+      const setMenu = (open) => {
+        mobileMenu.classList.toggle('is-open', open);
+        navToggle.setAttribute('aria-expanded', String(open));
+        navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+        iconOpen.classList.toggle('hidden', open);
+        iconClose.classList.toggle('hidden', !open);
+      };
+      navToggle.addEventListener('click', () => setMenu(!mobileMenu.classList.contains('is-open')));
+      mobileMenu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
+      addEventListener('resize', () => { if (window.innerWidth >= 768) setMenu(false); });
+    }
+
+    // Scroll-reveal — reveal generously ahead of the viewport, plus a safety
+    // net so content can never stay hidden if the observer ever misses one.
+    const els = document.querySelectorAll('.reveal');
+    const showAll = () => els.forEach((el) => el.classList.add('is-in'));
+    if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) {
+              e.target.classList.add('is-in');
+              io.unobserve(e.target);
+            }
+          }
+        },
+        { rootMargin: '0px 0px 600px 0px', threshold: 0 },
+      );
+      els.forEach((el) => io.observe(el));
+      // Safety: anything still hidden after 2.5s gets shown unconditionally.
+      window.setTimeout(showAll, 2500);
+    } else {
+      showAll();
+    }
+
+    // Header hairline appears once you scroll past the hero top
+    const header = document.getElementById('site-header');
+    const onScroll = () => {
+      if (window.scrollY > 12) header?.classList.add('border-line/100', 'shadow-sm');
+      else header?.classList.remove('border-line/100', 'shadow-sm');
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    // 3D pointer-tilt on project showcases (pointer devices only, motion-safe)
+    const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const noMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (fine && !noMotion) {
+      document.querySelectorAll('.tilt-stage').forEach((stage) => {
+        const card = stage.querySelector('.tilt');
+        if (!card) return;
+        const power = Number(card.getAttribute('data-tilt')) || 7;
+        let frame = 0;
+        stage.addEventListener('pointermove', (ev) => {
+          if (frame) return;
+          frame = requestAnimationFrame(() => {
+            frame = 0;
+            const r = stage.getBoundingClientRect();
+            const dx = (ev.clientX - r.left) / r.width - 0.5;
+            const dy = (ev.clientY - r.top) / r.height - 0.5;
+            card.style.transform =
+              'rotateY(' + (dx * power).toFixed(2) + 'deg) rotateX(' + (-dy * power).toFixed(2) + 'deg)';
+          });
+        });
+        stage.addEventListener('pointerleave', () => {
+          card.style.transform = '';
+        });
+      });
+    }
+
+    // Premium phone-deck — symmetric coverflow: active phone big in the
+    // centre, neighbours peeking on the left AND right, turned inward.
+    const coverLevels = [
+      { x: 0, s: 1, ry: 0, o: 1, b: 0 }, // centre — big
+      { x: 43, s: 0.8, ry: 26, o: 0.5, b: 1 }, // immediate neighbours
+      { x: 69, s: 0.62, ry: 31, o: 0.22, b: 2 }, // further back
+    ];
+    document.querySelectorAll('[data-deck]').forEach((deck) => {
+      const cards = Array.from(deck.querySelectorAll('.deck-card'));
+      const dotWrap = deck.parentElement && deck.parentElement.querySelector('[data-dots]');
+      const dots = dotWrap ? Array.from(dotWrap.querySelectorAll('.deck-dot')) : [];
+      const total = cards.length;
+      if (total <= 1) return;
+      let active = 0;
+      const place = () => {
+        cards.forEach((card, idx) => {
+          // signed offset so cards before active go left, after go right
+          let off = idx - active;
+          if (off > total / 2) off -= total;
+          if (off < -total / 2) off += total;
+          const dir = Math.sign(off);
+          const lvl = Math.abs(off);
+          const L = coverLevels[Math.min(lvl, coverLevels.length - 1)];
+          const hidden = lvl >= coverLevels.length;
+          card.style.transform =
+            'translateX(' + dir * L.x + '%) scale(' + L.s + ') rotateY(' + -dir * L.ry + 'deg)';
+          card.style.opacity = hidden ? '0' : String(L.o);
+          card.style.filter = lvl === 0 ? 'none' : 'blur(' + L.b + 'px)';
+          card.style.zIndex = String(100 - lvl);
+        });
+        dots.forEach((d, i) => d.setAttribute('data-on', i === active ? 'true' : 'false'));
+      };
+      place();
+      let timer = 0;
+      const tick = () => { active = (active + 1) % total; place(); };
+      const start = () => { if (!timer && !noMotion) timer = window.setInterval(tick, 3000); };
+      const stop = () => { if (timer) { clearInterval(timer); timer = 0; } };
+      start();
+      deck.addEventListener('pointerenter', stop);
+      deck.addEventListener('pointerleave', start);
+      cards.forEach((card, idx) =>
+        card.addEventListener('click', () => {
+          active = idx === active ? (active + 1) % total : idx;
+          place();
+        }),
+      );
+      dots.forEach((d, idx) =>
+        d.addEventListener('click', () => { active = idx; place(); }),
+      );
+    });
+
+    // Warm EVERY project screenshot into cache right after parse — long before
+    // the user scrolls down — so decks are never blank on reveal. Images stay
+    // loading="lazy" in markup (off-screen, browser keeps these warm fetches at
+    // Low priority so the hero LCP is untouched), but the exact same resource
+    // each <img> will request is pre-fetched here (sizes set first so the
+    // responsive picker resolves the identical URL → guaranteed cache hit).
+    const warmDeckImages = () => {
+      document.querySelectorAll('.deck-card img').forEach((im) => {
+        const pre = new Image();
+        const sizes = im.getAttribute('sizes');
+        const srcset = im.getAttribute('srcset');
+        const src = im.getAttribute('src');
+        if (sizes) pre.sizes = sizes;
+        if (srcset) pre.srcset = srcset;
+        if (src) pre.src = src;
+      });
+    };
+    // Run after first paint (two frames) but well before window.load, giving
+    // the most lead time without blocking the initial render.
+    requestAnimationFrame(() => requestAnimationFrame(warmDeckImages));
+
+    // Contact form → delivers straight to email in real time via Formsubmit
+    // (no backend needed on a static site). First submission triggers a
+    // one-time activation email to the inbox owner.
+    const cform = document.getElementById('contact-form');
+    if (cform) {
+      const status = document.getElementById('cf-status');
+      const submitBtn = document.getElementById('cf-submit');
+      const submitLabel = submitBtn.querySelector('[data-label]');
+
+      // Per-field validators → return '' when valid, else an error message.
+      const validators = {
+        'cf-name': (v) => (v.trim() ? '' : 'Please enter your name.'),
+        'cf-email': (v) =>
+          !v.trim()
+            ? 'Please enter your email.'
+            : /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim())
+              ? ''
+              : 'Please enter a valid email address.',
+        'cf-message': (v) => (v.trim() ? '' : 'Please enter a short message.'),
+      };
+      const showFieldError = (id, msg) => {
+        const field = document.getElementById(id);
+        const err = document.getElementById('err-' + id.replace('cf-', ''));
+        if (msg) {
+          field.setAttribute('aria-invalid', 'true');
+          err.textContent = msg;
+          err.classList.remove('hidden');
+        } else {
+          field.removeAttribute('aria-invalid');
+          err.textContent = '';
+          err.classList.add('hidden');
+        }
+        return !msg;
+      };
+      // Live-clear an error once the user starts fixing that field.
+      Object.keys(validators).forEach((id) => {
+        const el = document.getElementById(id);
+        el.addEventListener('input', () => {
+          if (el.getAttribute('aria-invalid')) showFieldError(id, validators[id](el.value));
+        });
+      });
+
+      const setStatus = (msg, ok) => {
+        status.textContent = msg;
+        status.style.color = ok === true ? '#9fe6b0' : ok === false ? '#ff9a8a' : '';
+      };
+
+      cform.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const honey = cform.querySelector('[name="_honey"]');
+        if (honey && honey.value) return; // bot trap
+        setStatus('', null);
+
+        // Validate every field, surface inline errors, focus the first invalid.
+        let firstInvalid = null;
+        let allValid = true;
+        Object.keys(validators).forEach((id) => {
+          const el = document.getElementById(id);
+          const ok = showFieldError(id, validators[id](el.value));
+          if (!ok && !firstInvalid) firstInvalid = el;
+          allValid = allValid && ok;
+        });
+        if (!allValid) {
+          if (firstInvalid) firstInvalid.focus();
+          return;
+        }
+
+        const original = submitLabel.textContent;
+        submitBtn.disabled = true;
+        submitLabel.textContent = 'Sending…';
+        try {
+          // ── Email delivery endpoint ──────────────────────────────────────
+          // Provider: Formsubmit (no signup/key needed — it posts to your
+          // address directly). To switch to Formspree instead, paste your
+          // endpoint here, e.g.  https://formspree.io/f/XXXXXXXX
+          // and keep the JSON body below unchanged.
+          const ENDPOINT = 'https://formsubmit.co/ajax/darjidev9313@gmail.com';
+          const res = await fetch(ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+            body: JSON.stringify({
+              name: document.getElementById('cf-name').value.trim(),
+              email: document.getElementById('cf-email').value.trim(),
+              message: document.getElementById('cf-message').value.trim(),
+              _subject: 'New enquiry from your portfolio',
+              _template: 'table',
+            }),
+          });
+          const data = await res.json().catch(() => ({}));
+          if (res.ok && String(data.success) === 'true') {
+            cform.reset();
+            setStatus("Thanks! I'll get back to you soon.", true);
+          } else {
+            setStatus('Something went wrong, please try again or email me directly.', false);
+          }
+        } catch (err) {
+          setStatus('Something went wrong, please try again or email me directly.', false);
+        } finally {
+          submitBtn.disabled = false;
+          submitLabel.textContent = original;
+        }
+      });
+    }
+  </script>
+</Layout>
