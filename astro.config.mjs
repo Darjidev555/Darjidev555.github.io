@@ -4,6 +4,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://devdarji.com',
+  site: 'https://darjidev555.github.io',
+  base: '/',
   integrations: [tailwind(), sitemap()],
 });
