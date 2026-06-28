@@ -237,23 +237,27 @@ html.js .reveal.is-in {
 }
 .deck-dots {
   display: flex;
-  gap: 7px;
+  gap: 2px;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 14px;
 }
+/* 7px visible dot, ~25px tap target — padding extends the hit area while
+   background-clip keeps the colour to the content box (WCAG 2.5.8 target size). */
 .deck-dot {
+  box-sizing: content-box;
   width: 7px;
   height: 7px;
-  padding: 0;
+  padding: 9px;
   border: 0;
   border-radius: 9999px;
-  background: var(--line);
+  background-color: var(--line);
+  background-clip: content-box;
   cursor: pointer;
-  transition: width 0.3s ease, background 0.3s ease;
+  transition: width 0.3s ease, background-color 0.3s ease;
 }
 .deck-dot[data-on='true'] {
   width: 22px;
-  background: var(--signal);
+  background-color: var(--signal);
 }
 
 /* 3D pointer-tilt for project showcases */

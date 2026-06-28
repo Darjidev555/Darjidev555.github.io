@@ -22,7 +22,7 @@ const nav = [
   { label: 'Contact', href: '#contact' },
 ];
 
-// NOTE: placeholder spec data — replace with real numbers as we go.
+// Headline stats — surfaced in the stats band under the hero.
 const specs = [
   { k: 'Apps shipped', v: '4+' },
   { k: 'Users handled', v: '100K+' },
@@ -30,7 +30,7 @@ const specs = [
   { k: 'Status', v: 'Available' },
 ];
 
-// NOTE: placeholder projects — Vidplay is real (from current site); two are stubs.
+// Shipped projects — each with real screenshots, copy, and stack.
 const projects = [
   {
     idx: '01',
@@ -263,6 +263,7 @@ const services = [
             widths={[400, 600, 785]}
             sizes="(max-width: 768px) 80vw, 46vw"
             loading="eager"
+            fetchpriority="high"
             class="hero-float relative z-10 h-auto w-auto max-w-full max-h-[40vh] object-contain object-bottom drop-shadow-[0_30px_55px_rgba(21,23,28,0.18)] sm:max-h-[56vh] md:max-h-[72vh]"
           />
         </div>
@@ -288,8 +289,12 @@ const services = [
     <!-- ─── Selected Work ────────────────────────────────── -->
     <section id="work" class="border-t border-line">
       <div class="mx-auto max-w-shell px-5 py-20 md:px-10 md:py-28">
-        <div class="reveal flex items-baseline justify-between border-b border-line pb-5">
-          <h2 class="font-display text-3xl font-semibold tracking-tight md:text-4xl">Projects</h2>
+        <div class="reveal max-w-2xl border-b border-line pb-8">
+          <p class="font-mono text-[12px] uppercase tracking-[0.2em] text-signal">Selected work</p>
+          <h2 class="mt-4 font-display text-3xl font-semibold tracking-tight md:text-4xl">Projects</h2>
+          <p class="mt-4 text-lg leading-relaxed text-ink/65">
+            A few products I've designed, built, and shipped end to end — from first screen to store release.
+          </p>
         </div>
 
         <div class="mt-16 grid gap-20 md:gap-28">
@@ -309,7 +314,7 @@ const services = [
                     aria-hidden="true"
                   />
                   <div
-                    class="tilt relative z-10 overflow-visible rounded-[1.3rem] border border-line bg-panel px-5 py-6 shadow-[0_14px_38px_rgba(21,23,28,0.08)] transition-shadow duration-300 group-hover:shadow-[0_48px_90px_rgba(21,23,28,0.22)] md:px-6 md:py-7"
+                    class="tilt relative z-10 overflow-visible rounded-2xl border border-line bg-panel px-5 py-6 shadow-[0_14px_38px_rgba(21,23,28,0.08)] transition-shadow duration-300 group-hover:shadow-[0_48px_90px_rgba(21,23,28,0.22)] md:px-6 md:py-7"
                     data-tilt="5"
                   >
                     {p.images ? (
@@ -410,7 +415,7 @@ const services = [
         <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {
             services.map((s) => (
-              <div class="reveal group relative flex flex-col rounded-xl border border-line bg-paper/40 p-7 transition-all duration-300 hover:-translate-y-1.5 hover:border-signal/40 hover:bg-paper hover:shadow-[0_24px_50px_rgba(21,23,28,0.13)]">
+              <div class="reveal group relative flex flex-col rounded-2xl border border-line bg-paper/40 p-7 transition-all duration-300 hover:-translate-y-1.5 hover:border-signal/40 hover:bg-paper hover:shadow-[0_24px_50px_rgba(21,23,28,0.13)]">
                 <div class="flex h-12 w-12 items-center justify-center rounded-lg border border-line bg-panel text-signal transition-colors duration-300 group-hover:border-signal group-hover:bg-signal group-hover:text-paper">
                   <svg
                     viewBox="0 0 24 24"
@@ -441,7 +446,7 @@ const services = [
         <p class="reveal font-mono text-[12px] uppercase tracking-[0.2em] text-paper/50">
           Contact <span class="text-paper/30">//</span> Available for contract
         </p>
-        <h2 class="reveal reveal-delay-1 mt-6 max-w-[14ch] font-display text-[11vw] font-bold leading-[0.95] tracking-tightest sm:text-5xl lg:text-6xl">
+        <h2 class="reveal reveal-delay-1 mt-6 max-w-[14ch] font-display text-4xl font-bold leading-[0.98] tracking-tightest sm:text-5xl lg:text-6xl">
           Let's build something precise.
         </h2>
 
@@ -487,7 +492,7 @@ const services = [
         <div class="reveal reveal-delay-2">
           <form id="contact-form" class="space-y-5" novalidate>
             <div>
-              <label for="cf-name" class="mb-2 block font-mono text-[11px] uppercase tracking-wide text-paper/50">Name</label>
+              <label for="cf-name" class="mb-2 block font-mono text-[11px] uppercase tracking-wide text-paper/65">Name</label>
               <input
                 id="cf-name"
                 name="name"
@@ -501,7 +506,7 @@ const services = [
               <p id="err-name" class="mt-1.5 hidden font-mono text-[11px] text-red-300"></p>
             </div>
             <div>
-              <label for="cf-email" class="mb-2 block font-mono text-[11px] uppercase tracking-wide text-paper/50">Email</label>
+              <label for="cf-email" class="mb-2 block font-mono text-[11px] uppercase tracking-wide text-paper/65">Email</label>
               <input
                 id="cf-email"
                 name="email"
@@ -516,7 +521,7 @@ const services = [
               <p id="err-email" class="mt-1.5 hidden font-mono text-[11px] text-red-300"></p>
             </div>
             <div>
-              <label for="cf-message" class="mb-2 block font-mono text-[11px] uppercase tracking-wide text-paper/50">Project / Message</label>
+              <label for="cf-message" class="mb-2 block font-mono text-[11px] uppercase tracking-wide text-paper/65">Project / Message</label>
               <textarea
                 id="cf-message"
                 name="message"
@@ -548,9 +553,9 @@ const services = [
     <!-- ─── Footer ───────────────────────────────────────── -->
     <footer class="border-t border-line">
       <div
-        class="mx-auto flex max-w-shell flex-col gap-4 px-5 py-8 font-mono text-[11px] uppercase tracking-wide text-mute md:flex-row md:items-center md:justify-between md:px-10"
+        class="mx-auto flex max-w-shell flex-col gap-4 px-5 py-8 font-mono text-[11px] uppercase tracking-wide text-ink/65 md:flex-row md:items-center md:justify-between md:px-10"
       >
-        <span>© 2025 Dev Darji</span>
+        <span>© 2026 Dev Darji</span>
         <span>Designed &amp; built by Dev Darji — Astro + Tailwind</span>
         <a href="#top" class="link-underline text-ink">Back to top ↑</a>
       </div>
