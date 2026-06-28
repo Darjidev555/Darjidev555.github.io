@@ -695,7 +695,10 @@ const services = [
     ];
     document.querySelectorAll('[data-deck]').forEach((deck) => {
       const cards = Array.from(deck.querySelectorAll('.deck-card'));
-      const dotWrap = deck.parentElement && deck.parentElement.querySelector('[data-dots]');
+      // Dots live outside the .deck-clip wrapper, so scope the lookup to the
+      // whole project card instead of the deck's immediate parent.
+      const scope = deck.closest('.tilt') || deck.parentElement;
+      const dotWrap = scope && scope.querySelector('[data-dots]');
       const dots = dotWrap ? Array.from(dotWrap.querySelectorAll('.deck-dot')) : [];
       const total = cards.length;
       if (total <= 1) return;
