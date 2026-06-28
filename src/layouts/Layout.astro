@@ -36,6 +36,8 @@ const person = {
          JS the .reveal content stays visible by default. -->
     <script is:inline>
       document.documentElement.classList.add('js');
+      // Reload always lands at the top — never restore the old scroll position.
+      if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
     </script>
 
     <!-- Primary -->
